@@ -1,8 +1,8 @@
 ﻿using System;
 
 //ref link:https://www.youtube.com/watch?v=qwC4KRWHBdk&list=PLRwVmtr-pp06rfSgNYu_oBg40DkwXiRHt&index=8
-// EXE -> has .entrypoint
-// DLL -> 
+// EXE -> has .entrypoint in MSIL level code 
+// DLL -> no .entrypoint 
 
 /*---------------------------------CMD--------------------------------------
  * 
@@ -361,7 +361,104 @@ C:\Users\sunny\source\repos\DLL vs EXE in DotNET\DLL vs EXE in DotNET>MeExeCode.
 
 --------------------------NOTEPAD: MeExeCode.txt--------------------------------END
 
+C:\Users\sunny\source\repos\DLL vs EXE in DotNET\DLL vs EXE in DotNET>erase *.*
+C:\Users\sunny\source\repos\DLL vs EXE in DotNET\DLL vs EXE in DotNET\*.*, Are you sure (Y/N)? y
 
+C:\Users\sunny\source\repos\DLL vs EXE in DotNET\DLL vs EXE in DotNET>dir
+ Volume in drive C has no label.
+ Volume Serial Number is DAE4-938D
+
+ Directory of C:\Users\sunny\source\repos\DLL vs EXE in DotNET\DLL vs EXE in DotNET
+
+22/09/2023  06:33 am    <DIR>          .
+22/09/2023  06:33 am    <DIR>          ..
+22/09/2023  05:42 am    <DIR>          bin
+22/09/2023  05:42 am    <DIR>          obj
+22/09/2023  05:42 am    <DIR>          Properties
+               0 File(s)              0 bytes
+               5 Dir(s)  489,857,789,952 bytes free
+
+-------------------Created----------------------------
+Public class MeOtherMainClass
+{
+    Public static void Main()
+    {
+        Console.WriteLine("Hello world");
+    }
+}
+------------------------------------------------
+
+C:\Users\sunny\source\repos\DLL vs EXE in DotNET\DLL vs EXE in DotNET>dir
+ Volume in drive C has no label.
+ Volume Serial Number is DAE4-938D
+
+ Directory of C:\Users\sunny\source\repos\DLL vs EXE in DotNET\DLL vs EXE in DotNET
+
+22/09/2023  06:34 am    <DIR>          .
+22/09/2023  06:34 am    <DIR>          ..
+22/09/2023  05:42 am    <DIR>          bin
+22/09/2023  05:42 am    <DIR>          obj
+22/09/2023  06:34 am            17,042 Program.cs
+22/09/2023  05:42 am    <DIR>          Properties
+               1 File(s)         17,042 bytes
+               5 Dir(s)  489,860,870,144 bytes free
+
+C:\Users\sunny\source\repos\DLL vs EXE in DotNET\DLL vs EXE in DotNET>csc /out:MeMainExe.exe Program.cs
+Microsoft (R) Visual C# Compiler version 4.7.0-3.23416.8 (43b0b05c)
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+
+C:\Users\sunny\source\repos\DLL vs EXE in DotNET\DLL vs EXE in DotNET>MeMainExe.exe
+Hello world
+
+C:\Users\sunny\source\repos\DLL vs EXE in DotNET\DLL vs EXE in DotNET>dir
+ Volume in drive C has no label.
+ Volume Serial Number is DAE4-938D
+
+ Directory of C:\Users\sunny\source\repos\DLL vs EXE in DotNET\DLL vs EXE in DotNET
+
+22/09/2023  06:37 am    <DIR>          .
+22/09/2023  06:37 am    <DIR>          ..
+22/09/2023  05:42 am    <DIR>          bin
+22/09/2023  06:36 am             4,096 MeMainExe.exe
+22/09/2023  05:42 am    <DIR>          obj
+22/09/2023  06:37 am            18,023 Program.cs
+22/09/2023  05:42 am    <DIR>          Properties
+               2 File(s)         22,119 bytes
+               5 Dir(s)  489,856,614,400 bytes free
+
+--------------Create MeMainExe.exe to Reference EXE Program.exe------------|
+C:\Users\sunny\source\repos\DLL vs EXE in DotNET\DLL vs EXE in DotNET>csc /r:MeMainExe.exe Program.cs
+Microsoft (R) Visual C# Compiler version 4.7.0-3.23416.8 (43b0b05c)
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+
+C:\Users\sunny\source\repos\DLL vs EXE in DotNET\DLL vs EXE in DotNET>dir
+ Volume in drive C has no label.
+ Volume Serial Number is DAE4-938D
+
+ Directory of C:\Users\sunny\source\repos\DLL vs EXE in DotNET\DLL vs EXE in DotNET
+
+22/09/2023  06:41 am    <DIR>          .
+22/09/2023  06:41 am    <DIR>          ..
+22/09/2023  05:42 am    <DIR>          bin
+22/09/2023  06:36 am             4,096 MeMainExe.exe
+22/09/2023  05:42 am    <DIR>          obj
+22/09/2023  06:41 am            18,847 Program.cs
+22/09/2023  06:41 am             4,096 Program.exe
+22/09/2023  05:42 am    <DIR>          Properties
+               3 File(s)         27,039 bytes
+               5 Dir(s)  489,862,508,544 bytes free
+
+C:\Users\sunny\source\repos\DLL vs EXE in DotNET\DLL vs EXE in DotNET>Program.exe
+Hello world
+
+C:\Users\sunny\source\repos\DLL vs EXE in DotNET\DLL vs EXE in DotNET>erase MeMainExe.exe
+
+C:\Users\sunny\source\repos\DLL vs EXE in DotNET\DLL vs EXE in DotNET>Program.exe
+
+Unhandled Exception: System.IO.FileNotFoundException: Could not load file or assembly 'MeMainExe, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null' or one of its dependencies. The system cannot find the file specified.
+   at XXXxxxXXXxxXXXXx.Main()
 
 
  * 
@@ -369,10 +466,26 @@ C:\Users\sunny\source\repos\DLL vs EXE in DotNET\DLL vs EXE in DotNET>MeExeCode.
 
 
 
-class MainClass
+//class MainClass
+//{
+//    static void Main()
+//    {
+//        Console.WriteLine("Hello world");
+//    }
+//}
+
+//public class MeOtherMainClass
+//{
+//    public static void Main()
+//    {
+//        Console.WriteLine("Hello world");
+//    }
+//}
+
+class XXXxxxXXXxxXXXXx
 {
     static void Main()
     {
-        Console.WriteLine("Hello world");
+        MeOtherMainClass.Main();    // reference executable MeMainExe.exe
     }
 }
